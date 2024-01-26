@@ -3,6 +3,7 @@ import App from "../App";
 import GiftInventory from "../pages/GiftInventory";
 import AddGift from "../pages/AddGift";
 import SaleHistory from "../pages/SaleHistory";
+import Login from "../pages/Login";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
         element: <SaleHistory />,
       },
     ],
+  },
+  {
+    path: "/login",
+    element: <Login />,
   },
 ]);
 
