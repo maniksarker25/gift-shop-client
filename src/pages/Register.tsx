@@ -10,41 +10,17 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Login = () => {
-  const [login, { data, error }] = useLoginMutation();
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
-  const [errorMessage, setErrorMessage] = useState("");
-  console.log("data=>", data);
-  console.log("error=>", error);
+const Register = () => {
   const onSubmit = async (data: FieldValues) => {
-    // console.log(data);
-    setErrorMessage("");
-    try {
-      const userInfo = {
-        email: data.email,
-        password: data.password,
-      };
-      const res = await login(userInfo).unwrap();
-      if (res.success) {
-        const user = verifyToken(res.data.token) as TUser;
-        dispatch(setUser({ user, token: res.data.token }));
-        toast.success("User login successfully");
-        navigate("/gift-inventory");
-      }
-    } catch (error) {
-      setErrorMessage(error?.data.errorMessage);
-    }
+    console.log(data);
   };
   return (
     <Row style={{ height: "100vh" }} justify={"center"} align={"middle"}>
       <GForm onSubmit={onSubmit}>
+        <GInput type={"fullName"} name={"fullName"} label={"Full Name"} />
         <GInput type={"email"} name={"email"} label={"Email"} />
         <GInput type={"password"} name={"password"} label={"Password"} />
-        {errorMessage && (
-          <p style={{ color: "red", marginBottom: "7px" }}>{errorMessage}</p>
-        )}
-        {/* <p>kdjfd</p> */}
+
         <div>
           <Button
             style={{
@@ -54,15 +30,12 @@ const Login = () => {
             }}
             htmlType="submit"
           >
-            Login
+            Register
           </Button>
           <p style={{ fontSize: "16px", marginTop: "4px" }}>
-            Don't have an account?{" "}
-            <Link
-              to={"/register"}
-              style={{ color: "#1677FF", cursor: "pointer" }}
-            >
-              Register
+            Already have account?{" "}
+            <Link to={"/login"} style={{ color: "#1677FF", cursor: "pointer" }}>
+              Login
             </Link>
           </p>
         </div>
@@ -71,4 +44,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
