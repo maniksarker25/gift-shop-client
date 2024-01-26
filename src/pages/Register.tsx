@@ -2,17 +2,34 @@ import { Button, Row } from "antd";
 import GForm from "../components/form/GForm";
 import GInput from "../components/form/GInput";
 import { FieldValues } from "react-hook-form";
-import { useLoginMutation } from "../redux/features/auth/authApi";
-import { verifyToken } from "../utils/verifyToken";
-import { TUser, setUser } from "../redux/features/auth/authSlice";
-import { useAppDispatch } from "../redux/hooks";
-import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { useRegisterMutation } from "../redux/features/auth/authApi";
+import toast from "react-hot-toast";
 import { useState } from "react";
 
 const Register = () => {
+  const [register, { data, error }] = useRegisterMutation();
+  const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
+  console.log("data=>", data);
+  console.log("error=>", error);
   const onSubmit = async (data: FieldValues) => {
     console.log(data);
+    setErrorMessage("");
+    try {
+      const userInfo = {
+        fullName: data.fullName,
+        email: data.email,
+        password: data.password,
+      };
+      const res = await register(userInfo).unwrap();
+      if (res.success) {
+        toast.success("User registration successful");
+        navigate("/login");
+      }
+    } catch (error) {
+      setErrorMessage(error?.data.errorMessage);
+    }
   };
   return (
     <Row style={{ height: "100vh" }} justify={"center"} align={"middle"}>
@@ -20,7 +37,9 @@ const Register = () => {
         <GInput type={"fullName"} name={"fullName"} label={"Full Name"} />
         <GInput type={"email"} name={"email"} label={"Email"} />
         <GInput type={"password"} name={"password"} label={"Password"} />
-
+        {errorMessage && (
+          <p style={{ color: "red", marginBottom: "7px" }}>{errorMessage}</p>
+        )}
         <div>
           <Button
             style={{

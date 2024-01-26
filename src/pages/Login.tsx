@@ -21,11 +21,11 @@ const Login = () => {
     // console.log(data);
     setErrorMessage("");
     try {
-      const userInfo = {
+      const loginInfo = {
         email: data.email,
         password: data.password,
       };
-      const res = await login(userInfo).unwrap();
+      const res = await login(loginInfo).unwrap();
       if (res.success) {
         const user = verifyToken(res.data.token) as TUser;
         dispatch(setUser({ user, token: res.data.token }));
@@ -44,7 +44,7 @@ const Login = () => {
         {errorMessage && (
           <p style={{ color: "red", marginBottom: "7px" }}>{errorMessage}</p>
         )}
-        {/* <p>kdjfd</p> */}
+
         <div>
           <Button
             style={{
