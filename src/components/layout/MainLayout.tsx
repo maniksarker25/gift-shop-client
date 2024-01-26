@@ -1,19 +1,20 @@
 import { Button, Layout, Menu, MenuProps } from "antd";
+import { NavLink, Outlet } from "react-router-dom";
 
 const { Header, Content, Sider } = Layout;
 
 const items: MenuProps["items"] = [
   {
     key: "1",
-    label: "Dashboard",
+    label: <NavLink to={"gift-inventory"}>Gift Inventory</NavLink>,
   },
   {
     key: "2",
-    label: "Gift Inventory",
+    label: <NavLink to={"add-gift"}>Add Gift</NavLink>,
   },
   {
     key: "3",
-    label: "Sales History",
+    label: <NavLink to={"sale-history"}>Sale History</NavLink>,
   },
 ];
 const MainLayout = () => {
@@ -70,7 +71,7 @@ const MainLayout = () => {
               minHeight: 360,
             }}
           >
-            <h1>The main content should show here</h1>
+            <Outlet />
           </div>
         </Content>
       </Layout>
