@@ -1,4 +1,4 @@
-import { Button } from "antd";
+import { Button, Row } from "antd";
 import GForm from "../components/form/GForm";
 import GInput from "../components/form/GInput";
 import { FieldValues } from "react-hook-form";
@@ -8,11 +8,24 @@ const Login = () => {
     console.log(data);
   };
   return (
-    <GForm onSubmit={onSubmit}>
-      <GInput type={"email"} name={"email"} label={"Email"} />
-      <GInput type={"password"} name={"password"} label={"Password"} />
-      <Button htmlType="submit">Login</Button>
-    </GForm>
+    <Row style={{ height: "100vh" }} justify={"center"} align={"middle"}>
+      <GForm onSubmit={onSubmit}>
+        <GInput type={"email"} name={"email"} label={"Email"} />
+        <GInput type={"password"} name={"password"} label={"Password"} />
+        <div>
+          <Button
+            style={{
+              width: "100%",
+              backgroundColor: "#1677FF",
+              color: "white",
+            }}
+            htmlType="submit"
+          >
+            Login
+          </Button>
+        </div>
+      </GForm>
+    </Row>
   );
 };
 
