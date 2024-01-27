@@ -8,7 +8,7 @@ const { Header, Content, Sider } = Layout;
 const items: MenuProps["items"] = [
   {
     key: "1",
-    label: <NavLink to={"gift-inventory"}>Gift Inventory</NavLink>,
+    label: <NavLink to={"/"}>Gift Inventory</NavLink>,
   },
   {
     key: "2",
@@ -64,7 +64,12 @@ const MainLayout = () => {
               marginRight: "5px",
             }}
           >
-            <Button onClick={() => dispatch(logout())}>Logout</Button>
+            <Button
+              style={{ backgroundColor: "red", color: "white" }}
+              onClick={() => dispatch(logout())}
+            >
+              Logout
+            </Button>
           </div>
         </Header>
         <Content style={{ margin: "24px 16px 0" }}>

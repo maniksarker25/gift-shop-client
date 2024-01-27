@@ -4,11 +4,20 @@ const giftApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getGifts: builder.query({
       query: () => ({
-        url: "/gift",
+        url: "/gifts",
         method: "GET",
       }),
+      providesTags: ["gift"],
+    }),
+    addGift: builder.mutation({
+      query: (giftInfo) => ({
+        url: "/gifts",
+        method: "POST",
+        body: giftInfo,
+      }),
+      invalidatesTags: ["gift"],
     }),
   }),
 });
 
-export const { useGetGiftsQuery } = giftApi;
+export const { useGetGiftsQuery, useAddGiftMutation } = giftApi;

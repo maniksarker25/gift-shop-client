@@ -3,21 +3,50 @@ import GForm from "../../form/GForm";
 import GInput from "../../form/GInput";
 import { FieldValues } from "react-hook-form";
 import GSelect from "../../form/GSelect";
+import { useAddGiftMutation } from "../../../redux/features/gift/giftApi";
+import toast from "react-hot-toast";
+import Loader from "../loader/Loader";
 
 const AddGiftContainer = () => {
-  const handleAddGiftSubmit = (data: FieldValues) => {
-    console.log(data);
+  const [addGift, { isLoading }] = useAddGiftMutation();
+
+  // console.log(data, isLoading, isError, isSuccess);
+
+  const handleAddGiftSubmit = async (data: FieldValues) => {
+    // console.log(data);
+    try {
+      const giftInfo = {
+        name: data.name,
+        price: parseInt(data.price),
+        quantity: parseInt(data.quantity),
+        occasion: data.occasion,
+        recipient: data.recipient,
+        category: data.category,
+        theme: data.theme,
+        brand: data.brand,
+        color: data.color,
+      };
+      const res = await addGift(giftInfo).unwrap();
+      if (res?.success) {
+        toast.success("Gift added successfully");
+      }
+    } catch (error) {
+      toast.error(error?.data.errorMessage);
+    }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <Row justify={"center"}>
       <GForm onSubmit={handleAddGiftSubmit}>
         <div className="md:flex gap-4">
           <GInput type={"text"} name={"name"} label={"Name"} />
-          <GInput type={"text"} name={"price"} label={"Price"} />
+          <GInput type={"number"} name={"price"} label={"Price"} />
         </div>
         <div className="md:flex gap-4">
-          <GInput type={"quantity"} name={"quantity"} label={"Quantity"} />
+          <GInput type={"number"} name={"quantity"} label={"Quantity"} />
           <GSelect
             name="occasion"
             label="Occasion"

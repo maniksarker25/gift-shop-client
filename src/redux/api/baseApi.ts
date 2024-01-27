@@ -11,6 +11,7 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 
 const baseQuery = fetchBaseQuery({
   baseUrl: "http://localhost:5000/api",
+
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState)?.auth?.token;
     if (token) {
@@ -56,5 +57,6 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: baseQuery,
+  tagTypes: ["gift"],
   endpoints: () => ({}),
 });

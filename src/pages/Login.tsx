@@ -30,7 +30,7 @@ const Login = () => {
         const user = verifyToken(res.data.token) as TUser;
         dispatch(setUser({ user, token: res.data.token }));
         toast.success("User login successfully");
-        navigate("/gift-inventory");
+        navigate("/");
       }
     } catch (error) {
       setErrorMessage(error?.data.errorMessage);
