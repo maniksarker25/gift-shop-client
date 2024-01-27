@@ -1,12 +1,24 @@
-import { Button, Card } from "antd";
+import { Card } from "antd";
 import { useGetGiftsQuery } from "../../../redux/features/gift/giftApi";
 import Loader from "../loader/Loader";
 import SaleModal from "./SeleModal";
 
+type TGift = {
+  _id: string;
+  name: string;
+  price: number;
+  quantity: number;
+  occasion: string;
+  recipient: string;
+  category: string;
+  theme: string;
+  brand: string;
+  color: string;
+};
 const GiftInventoryContainer = () => {
   const { data, isLoading } = useGetGiftsQuery(undefined);
-  console.log(isLoading);
-  console.log(data);
+  // console.log(isLoading);
+  // console.log(data);
   if (isLoading) {
     return <Loader />;
   }
@@ -26,7 +38,7 @@ const GiftInventoryContainer = () => {
             gap: "16px",
           }}
         >
-          {data?.data?.map((gift, index) => (
+          {data?.data?.map((gift: TGift, index: number) => (
             <Card
               key={index}
               title={gift?.name}
