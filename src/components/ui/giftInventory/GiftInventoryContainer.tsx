@@ -1,7 +1,8 @@
 import { Button, Card } from "antd";
 import { useGetGiftsQuery } from "../../../redux/features/gift/giftApi";
 import Loader from "../loader/Loader";
-import SellModal from "./SellModal";
+import SaleModal from "./SeleModal";
+
 const GiftInventoryContainer = () => {
   const { data, isLoading } = useGetGiftsQuery(undefined);
   console.log(isLoading);
@@ -42,7 +43,9 @@ const GiftInventoryContainer = () => {
               <p>Color : {gift?.color}</p>
               <div style={{ display: "flex", justifyContent: "end" }}>
                 {/* <Button>Sell</Button> */}
-                <SellModal giftId={gift?._id} />
+              </div>
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <SaleModal giftId={gift._id} />
               </div>
             </Card>
           ))}

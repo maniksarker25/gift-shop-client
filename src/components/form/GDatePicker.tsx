@@ -1,30 +1,30 @@
-import { Input } from "antd";
+import { DatePicker } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
-type TInputProps = {
-  type: string;
+
+type TDatePickerProps = {
   name: string;
   label: string;
 };
-const GInput = ({ type, name, label }: TInputProps) => {
+
+const GDatePicker = ({ name, label }: TDatePickerProps) => {
   const {
     control,
     formState: { errors },
   } = useFormContext();
+
   return (
     <div style={{ marginBottom: "15px" }}>
-      {label ? <p style={{ marginBottom: "5px" }}>{label}</p> : null}
+      {label && <p style={{ marginBottom: "5px" }}>{label}</p>}
       <Controller
         name={name}
         control={control}
-        rules={{ required: `Please enter ${label || name}` }}
+        rules={{ required: `Please select ${label || name}` }}
         render={({ field }) => (
           <div>
-            <Input
+            <DatePicker
               style={{ width: "350px" }}
-              placeholder={`Enter ${label || name}`}
               {...field}
-              type={type}
-              id={name}
+              placeholder={`Select ${label || name}`}
             />
             {errors[name] && (
               <p style={{ color: "red" }}>
@@ -38,4 +38,4 @@ const GInput = ({ type, name, label }: TInputProps) => {
   );
 };
 
-export default GInput;
+export default GDatePicker;
