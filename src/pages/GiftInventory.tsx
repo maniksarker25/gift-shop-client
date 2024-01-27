@@ -1,4 +1,3 @@
-import React from "react";
 import GiftInventoryContainer from "../components/ui/giftInventory/GiftInventoryContainer";
 
 const GiftInventory = () => {

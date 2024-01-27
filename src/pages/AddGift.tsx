@@ -1,7 +1,11 @@
-import React from "react";
+import AddGiftContainer from "../components/ui/addGift/AddGiftContainer";
 
 const AddGift = () => {
-  return <div>This is add gift route</div>;
+  return (
+    <div>
+      <AddGiftContainer />
+    </div>
+  );
 };
 
 export default AddGift;

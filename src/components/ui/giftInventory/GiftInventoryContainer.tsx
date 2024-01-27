@@ -1,4 +1,4 @@
-import { Card, Col, Row } from "antd";
+import { Card } from "antd";
 import { useGetGiftsQuery } from "../../../redux/features/gift/giftApi";
 const GiftInventoryContainer = () => {
   const { data, isLoading } = useGetGiftsQuery(undefined);
