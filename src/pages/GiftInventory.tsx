@@ -1,7 +1,12 @@
 import React from "react";
+import GiftInventoryContainer from "../components/ui/giftInventory/GiftInventoryContainer";
 
 const GiftInventory = () => {
-  return <div>This is gift inventory</div>;
+  return (
+    <div>
+      <GiftInventoryContainer />
+    </div>
+  );
 };
 
 export default GiftInventory;
