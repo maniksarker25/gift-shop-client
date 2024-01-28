@@ -8,11 +8,13 @@ import { TGift } from "./GiftInventoryContainer";
 import { useUpdateGiftMutation } from "../../../redux/features/gift/giftApi";
 import Loader from "../loader/Loader";
 import toast from "react-hot-toast";
+import DuplicateGiftCompo from "./DuplicateGiftCompo";
 
 const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
   // console.log(giftId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateGift, { isLoading }] = useUpdateGiftMutation();
+  const [makeDuplicate, setMakeDuplicate] = useState(false);
   // default values
   const defaultValues = {
     name: gift.name,
@@ -29,14 +31,17 @@ const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
   // console.log("add sale", data, isLoading, isError);
 
   const showModal = () => {
+    setMakeDuplicate(false);
     setIsModalOpen(true);
   };
 
   const handleOk = () => {
+    setMakeDuplicate(false);
     setIsModalOpen(false);
   };
 
   const handleCancel = () => {
+    setMakeDuplicate(false);
     setIsModalOpen(false);
   };
 
@@ -73,7 +78,7 @@ const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
   return (
     <div>
       {" "}
-      <Button onClick={showModal}>Update</Button>
+      <Button onClick={showModal}>Duplicate & Edit</Button>
       <Modal
         title=""
         open={isModalOpen}
@@ -82,74 +87,184 @@ const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
         footer={""}
         width={"800px"}
       >
-        <GForm onSubmit={handleUpdateGift} defaultValues={defaultValues}>
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <div>
-              <div className="md:flex gap-4">
-                <GInput type={"text"} name={"name"} label={"Name"} />
-                <GInput type={"number"} name={"price"} label={"Price"} />
+        {makeDuplicate ? (
+          // <div>
+          //   <h2 style={{ fontSize: "20px", marginBottom: "15px" }}>
+          //     Make duplicate your product with some changes
+          //   </h2>
+          //   <GForm onSubmit={handleUpdateGift} defaultValues={defaultValues}>
+          //     <div style={{ display: "flex", justifyContent: "center" }}>
+          //       <div>
+          //         <div className="md:flex gap-4">
+          //           <GInput type={"text"} name={"name"} label={"Name"} />
+          //           <GInput type={"number"} name={"price"} label={"Price"} />
+          //         </div>
+          //         <div className="md:flex gap-4">
+          //           <GInput
+          //             type={"number"}
+          //             name={"quantity"}
+          //             label={"Quantity"}
+          //           />
+          //           <GSelect
+          //             name="occasion"
+          //             label="Occasion"
+          //             options={[
+          //               { value: "Birthday", label: "Birthday" },
+          //               { value: "Anniversary", label: "Anniversary" },
+          //               { value: "Holiday", label: "Holiday" },
+          //             ]}
+          //           />
+          //         </div>
+          //         <div className="md:flex gap-4">
+          //           <GInput
+          //             type={"text"}
+          //             name={"recipient"}
+          //             label={"Recipient"}
+          //           />
+          //           <GSelect
+          //             name="category"
+          //             label="Category"
+          //             options={[
+          //               { value: "Home decor", label: "Home decor" },
+          //               { value: "Gadget", label: "Gadget" },
+          //               { value: "Accessories", label: "Accessories" },
+          //             ]}
+          //           />
+          //         </div>
+          //         <div className="md:flex gap-4">
+          //           <GSelect
+          //             name="theme"
+          //             label="Theme"
+          //             options={[
+          //               { value: "Vintage", label: "Vintage" },
+          //               { value: "Romantic", label: "Romantic" },
+          //               { value: "Modern", label: "Modern" },
+          //             ]}
+          //           />
+          //           <GSelect
+          //             name="brand"
+          //             label="Brand"
+          //             options={[
+          //               { value: "GiftCraft", label: "GiftCraft" },
+          //               { value: "JoyFusion", label: "JoyFusion" },
+          //               { value: "ElegantGiftery", label: "ElegantGiftery" },
+          //             ]}
+          //           />
+          //         </div>
+          //         <div style={{ width: "100%" }}>
+          //           <GInput type={"text"} name={"color"} label={"Color"} />
+          //         </div>
+          //         <div style={{ display: "flex", justifyContent: "end" }}>
+          //           <Button
+          //             style={{
+          //               backgroundColor: "#1677FF",
+          //               color: "white",
+          //             }}
+          //             htmlType="submit"
+          //           >
+          //             Submit
+          //           </Button>
+          //         </div>
+          //       </div>
+          //     </div>
+          //   </GForm>
+          // </div>
+          <DuplicateGiftCompo
+            defaultValues={defaultValues}
+            setIsModalOpen={setIsModalOpen}
+          />
+        ) : (
+          <div>
+            <h2 style={{ fontSize: "20px", marginBottom: "15px" }}>
+              Make update your product
+            </h2>
+            <GForm onSubmit={handleUpdateGift} defaultValues={defaultValues}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div>
+                  <div className="md:flex gap-4">
+                    <GInput type={"text"} name={"name"} label={"Name"} />
+                    <GInput type={"number"} name={"price"} label={"Price"} />
+                  </div>
+                  <div className="md:flex gap-4">
+                    <GInput
+                      type={"number"}
+                      name={"quantity"}
+                      label={"Quantity"}
+                    />
+                    <GSelect
+                      name="occasion"
+                      label="Occasion"
+                      options={[
+                        { value: "Birthday", label: "Birthday" },
+                        { value: "Anniversary", label: "Anniversary" },
+                        { value: "Holiday", label: "Holiday" },
+                      ]}
+                    />
+                  </div>
+                  <div className="md:flex gap-4">
+                    <GInput
+                      type={"text"}
+                      name={"recipient"}
+                      label={"Recipient"}
+                    />
+                    <GSelect
+                      name="category"
+                      label="Category"
+                      options={[
+                        { value: "Home decor", label: "Home decor" },
+                        { value: "Gadget", label: "Gadget" },
+                        { value: "Accessories", label: "Accessories" },
+                      ]}
+                    />
+                  </div>
+                  <div className="md:flex gap-4">
+                    <GSelect
+                      name="theme"
+                      label="Theme"
+                      options={[
+                        { value: "Vintage", label: "Vintage" },
+                        { value: "Romantic", label: "Romantic" },
+                        { value: "Modern", label: "Modern" },
+                      ]}
+                    />
+                    <GSelect
+                      name="brand"
+                      label="Brand"
+                      options={[
+                        { value: "GiftCraft", label: "GiftCraft" },
+                        { value: "JoyFusion", label: "JoyFusion" },
+                        { value: "ElegantGiftery", label: "ElegantGiftery" },
+                      ]}
+                    />
+                  </div>
+                  <div style={{ width: "100%" }}>
+                    <GInput type={"text"} name={"color"} label={"Color"} />
+                  </div>
+                  <div style={{ display: "flex", justifyContent: "end" }}>
+                    <Button
+                      style={{
+                        backgroundColor: "#1677FF",
+                        color: "white",
+                      }}
+                      htmlType="submit"
+                    >
+                      Update
+                    </Button>
+                  </div>
+                </div>
               </div>
-              <div className="md:flex gap-4">
-                <GInput type={"number"} name={"quantity"} label={"Quantity"} />
-                <GSelect
-                  name="occasion"
-                  label="Occasion"
-                  options={[
-                    { value: "Birthday", label: "Birthday" },
-                    { value: "Anniversary", label: "Anniversary" },
-                    { value: "Holiday", label: "Holiday" },
-                  ]}
-                />
-              </div>
-              <div className="md:flex gap-4">
-                <GInput type={"text"} name={"recipient"} label={"Recipient"} />
-                <GSelect
-                  name="category"
-                  label="Category"
-                  options={[
-                    { value: "Home decor", label: "Home decor" },
-                    { value: "Gadget", label: "Gadget" },
-                    { value: "Accessories", label: "Accessories" },
-                  ]}
-                />
-              </div>
-              <div className="md:flex gap-4">
-                <GSelect
-                  name="theme"
-                  label="Theme"
-                  options={[
-                    { value: "Vintage", label: "Vintage" },
-                    { value: "Romantic", label: "Romantic" },
-                    { value: "Modern", label: "Modern" },
-                  ]}
-                />
-                <GSelect
-                  name="brand"
-                  label="Brand"
-                  options={[
-                    { value: "GiftCraft", label: "GiftCraft" },
-                    { value: "JoyFusion", label: "JoyFusion" },
-                    { value: "ElegantGiftery", label: "ElegantGiftery" },
-                  ]}
-                />
-              </div>
-              <div style={{ width: "100%" }}>
-                <GInput type={"text"} name={"color"} label={"Color"} />
-              </div>
-              <div style={{ display: "flex", justifyContent: "end" }}>
-                <Button
-                  style={{
-                    backgroundColor: "#1677FF",
-                    color: "white",
-                  }}
-                  htmlType="submit"
-                >
-                  Submit
-                </Button>
-              </div>
-            </div>
+            </GForm>
+            <Button
+              onClick={() => setMakeDuplicate(!makeDuplicate)}
+              style={{
+                backgroundColor: "#1677FF",
+                color: "white",
+              }}
+            >
+              Make Duplicate
+            </Button>
           </div>
-        </GForm>
+        )}
       </Modal>
     </div>
   );
