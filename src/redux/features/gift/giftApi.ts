@@ -41,6 +41,17 @@ const giftApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["gift"],
     }),
+    deleteMultipleGift: builder.mutation({
+      query: (ids) => {
+        console.log(ids);
+        return {
+          url: `/gifts/delete-gifts`,
+          method: "POST",
+          body: ids,
+        };
+      },
+      invalidatesTags: ["gift"],
+    }),
   }),
 });
 
@@ -49,4 +60,5 @@ export const {
   useAddGiftMutation,
   useUpdateGiftMutation,
   useDeleteSingleGiftMutation,
+  useDeleteMultipleGiftMutation,
 } = giftApi;

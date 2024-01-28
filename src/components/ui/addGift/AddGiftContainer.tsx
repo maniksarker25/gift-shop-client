@@ -92,10 +92,6 @@ const AddGiftContainer = () => {
         <div style={{ width: "100%" }}>
           <GInput type={"text"} name={"color"} label={"Color"} />
         </div>
-        {/* {errorMessage && (
-          <p style={{ color: "red", marginBottom: "7px" }}>{errorMessage}</p>
-        )} */}
-
         <div>
           <Button
             style={{

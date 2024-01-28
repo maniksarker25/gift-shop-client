@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Card, Input, Select } from "antd";
 import {
+  useDeleteMultipleGiftMutation,
   useDeleteSingleGiftMutation,
   useGetGiftsQuery,
 } from "../../../redux/features/gift/giftApi";
@@ -25,6 +26,8 @@ export type TGift = {
 };
 const GiftInventoryContainer = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  console.log(selectedCards);
   // state for filer values
   const [filters, setFilters] = useState({
     category: "",
@@ -64,15 +67,38 @@ const GiftInventoryContainer = () => {
     formatFiltersForQuery()
   );
 
+  const [deleteSingleGift] = useDeleteSingleGiftMutation();
+  // console.log(singleDeleteData, singleDeleteLoading);
   const [
-    deleteSingleGift,
-    { data: singleDeleteData, isLoading: singleDeleteLoading },
-  ] = useDeleteSingleGiftMutation();
-  console.log(singleDeleteData, singleDeleteLoading);
+    deleteMultipleGift,
+    { data: multipleDeleteData, isLoading: multipleDeleteLoading },
+  ] = useDeleteMultipleGiftMutation();
+  console.log(multipleDeleteData, multipleDeleteLoading);
+
   const handleSingleGiftDelete = async (id: string) => {
     const res = await deleteSingleGift(id).unwrap();
     if (res.success) {
       toast.success("Gift deleted successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
+  // Function to handle card selection
+  const handleCardSelect = (cardId: string) => {
+    if (selectedCards.includes(cardId)) {
+      setSelectedCards((prevSelectedCards) =>
+        prevSelectedCards.filter((id) => id !== cardId)
+      );
+    } else {
+      // If not selected, add it to the array
+      setSelectedCards((prevSelectedCards) => [...prevSelectedCards, cardId]);
+    }
+  };
+  const handleMultipleDeleteGift = async () => {
+    const ids = { ids: selectedCards };
+    const res = await deleteMultipleGift(ids).unwrap();
+    if (res.success) {
+      toast.success("Gifts deleted successfully");
     } else {
       toast.error("Something went wrong");
     }
@@ -116,6 +142,18 @@ const GiftInventoryContainer = () => {
       </div>
       <div>
         {/* <Row gutter={[16, 16]} justify="space-between"> */}
+        {selectedCards.length > 0 && (
+          <Button
+            onClick={handleMultipleDeleteGift}
+            style={{
+              backgroundColor: "red",
+              color: "white",
+              marginTop: "10px",
+            }}
+          >
+            Delete Selected Gifts
+          </Button>
+        )}
         <div
           style={{
             display: "flex",
@@ -140,7 +178,16 @@ const GiftInventoryContainer = () => {
                   marginBottom: "20px",
                 }}
               >
-                <p>a</p>
+                <p>
+                  {" "}
+                  <input
+                    type="checkbox"
+                    style={{ cursor: "pointer" }}
+                    checked={selectedCards.includes(gift._id)}
+                    onChange={() => handleCardSelect(gift._id)}
+                  />
+                  <span style={{ marginLeft: "2px" }}> Select for delete</span>
+                </p>
                 <p
                   onClick={() => handleSingleGiftDelete(gift?._id)}
                   style={{ cursor: "pointer" }}
@@ -151,7 +198,7 @@ const GiftInventoryContainer = () => {
                     viewBox="0 0 24 24"
                     stroke-width="1.5"
                     stroke="currentColor"
-                    className="w-6 h-6"
+                    className="w-4 h-4"
                   >
                     <path
                       stroke-linecap="round"
