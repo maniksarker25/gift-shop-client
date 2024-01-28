@@ -262,7 +262,7 @@ const GiftInventoryContainer = () => {
               >
                 {gift?.name}
               </h2>
-              <p>Price : {gift?.price}</p>
+              <p>Price : {gift?.price} BDT</p>
               <p>Quantity : {gift?.quantity}</p>
               <p>Occasion : {gift?.occasion}</p>
               <p>Recipient : {gift?.recipient}</p>

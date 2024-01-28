@@ -43,7 +43,7 @@ const AddGiftContainer = () => {
       <GForm onSubmit={handleAddGiftSubmit}>
         <div className="md:flex gap-4">
           <GInput type={"text"} name={"name"} label={"Name"} />
-          <GInput type={"number"} name={"price"} label={"Price"} />
+          <GInput type={"number"} name={"price"} label={"Price (BDT)"} />
         </div>
         <div className="md:flex gap-4">
           <GInput type={"number"} name={"quantity"} label={"Quantity"} />
