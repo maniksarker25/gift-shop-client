@@ -47,7 +47,6 @@ const DuplicateGiftCompo = ({
       }
     } catch (err) {
       const apiError = err as ApiError;
-      //   console.log(apiError);
       toast.error(apiError?.data?.errorMessage);
     }
   };

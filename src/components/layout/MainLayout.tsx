@@ -26,6 +26,7 @@ const MainLayout = () => {
       <Sider
         breakpoint="lg"
         collapsedWidth="0"
+        style={{ zIndex: "5" }}
         onBreakpoint={(broken) => {
           console.log(broken);
         }}

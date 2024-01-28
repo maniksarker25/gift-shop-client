@@ -15,7 +15,6 @@ const SaleContainer = () => {
 
   const handleSelectChange = (value: TSelectedValue | "") => {
     setSelectedValue(value);
-    // console.log(value);
   };
   return (
     <div>

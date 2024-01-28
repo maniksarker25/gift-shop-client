@@ -11,7 +11,6 @@ import toast from "react-hot-toast";
 import DuplicateGiftCompo from "./DuplicateGiftCompo";
 
 const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
-  // console.log(giftId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updateGift, { isLoading }] = useUpdateGiftMutation();
   const [makeDuplicate, setMakeDuplicate] = useState(false);
@@ -63,7 +62,7 @@ const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
       data: updatedGiftInfo,
     };
     const res = await updateGift(options).unwrap();
-    // console.log(res);
+
     if (res.success) {
       toast.success("Gift updated successfully");
       handleCancel();

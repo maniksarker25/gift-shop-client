@@ -12,14 +12,12 @@ import { useState } from "react";
 import { ApiError } from "../types/responseType";
 
 const Login = () => {
-  const [login, { data, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
-  console.log("data=>", data);
-  console.log("error=>", error);
+
   const onSubmit = async (data: FieldValues) => {
-    // console.log(data);
     setErrorMessage("");
     try {
       const loginInfo = {

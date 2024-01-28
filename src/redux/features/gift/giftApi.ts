@@ -4,7 +4,6 @@ const giftApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getGifts: builder.query({
       query: (filters) => {
-        console.log(filters);
         return {
           url: "/gifts",
           method: "GET",
@@ -43,7 +42,6 @@ const giftApi = baseApi.injectEndpoints({
     }),
     deleteMultipleGift: builder.mutation({
       query: (ids) => {
-        console.log(ids);
         return {
           url: `/gifts/delete-gifts`,
           method: "POST",

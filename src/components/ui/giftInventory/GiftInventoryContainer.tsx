@@ -80,12 +80,11 @@ const GiftInventoryContainer = () => {
 
     return queryString ? `${queryString}` : "";
   };
-  // console.log(formatFiltersForQuery());
 
   const { data, isLoading } = useGetGiftsQuery(formatFiltersForQuery());
 
   const [deleteSingleGift] = useDeleteSingleGiftMutation();
-  // console.log(singleDeleteData, singleDeleteLoading);
+
   const [
     deleteMultipleGift,
     { data: multipleDeleteData, isLoading: multipleDeleteLoading },

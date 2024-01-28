@@ -9,13 +9,11 @@ import { useState } from "react";
 import { ApiError } from "../types/responseType";
 
 const Register = () => {
-  const [register, { data, error }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
-  console.log("data=>", data);
-  console.log("error=>", error);
+
   const onSubmit = async (data: FieldValues) => {
-    console.log(data);
     setErrorMessage("");
     try {
       const userInfo = {
