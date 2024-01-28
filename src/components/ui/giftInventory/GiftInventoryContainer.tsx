@@ -134,38 +134,52 @@ const GiftInventoryContainer = () => {
         //   marginTop: "15px",
         //   marginBottom: "15px",
         // }}
-        className="md:flex  gap-5"
+        className="xl:flex  gap-5"
       >
-        <div>
-          <Input
-            style={{ width: 200, marginRight: 8 }}
-            placeholder="Search By Name"
-            defaultValue={filters.name || undefined}
-            onChange={handleSearchInputChange}
-          />
-          <Button
-            style={{ backgroundColor: "#1677FF", color: "white" }}
-            onClick={handleSearchButtonClick}
+        <div className="md:flex gap-2">
+          <div
+            style={{
+              marginTop: "15px",
+            }}
           >
-            Search
-          </Button>
+            <Input
+              style={{ width: 200, marginRight: 8 }}
+              placeholder="Search By Name"
+              defaultValue={filters.name || undefined}
+              onChange={handleSearchInputChange}
+            />
+            <Button
+              style={{ backgroundColor: "#1677FF", color: "white" }}
+              onClick={handleSearchButtonClick}
+            >
+              Search
+            </Button>
+          </div>
+          <div
+            style={{
+              marginTop: "15px",
+            }}
+          >
+            <Input
+              style={{ width: 200, marginRight: 8 }}
+              placeholder="Min Price"
+              defaultValue={filters.minPrice || undefined}
+              onChange={handleMinInputChange}
+            />
+            <Input
+              style={{ width: 200, marginRight: 8 }}
+              placeholder="Max Price"
+              defaultValue={filters.maxPrice || undefined}
+              onChange={handleMaxInputChange}
+            />
+            <Button onClick={handleFilterButtonClick}>Filter</Button>
+          </div>
         </div>
-        <div>
-          <Input
-            style={{ width: 200, marginRight: 8 }}
-            placeholder="Min Price"
-            defaultValue={filters.minPrice || undefined}
-            onChange={handleMinInputChange}
-          />
-          <Input
-            style={{ width: 200, marginRight: 8 }}
-            placeholder="Max Price"
-            defaultValue={filters.maxPrice || undefined}
-            onChange={handleMaxInputChange}
-          />
-          <Button onClick={handleFilterButtonClick}>Filter</Button>
-        </div>
-        <div>
+        <div
+          style={{
+            marginTop: "15px",
+          }}
+        >
           <FilterOptions
             filters={filters}
             handleFilterChange={handleFilterChange}

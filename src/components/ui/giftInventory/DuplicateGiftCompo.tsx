@@ -1,4 +1,3 @@
-import React from "react";
 import GSelect from "../../form/GSelect";
 import GInput from "../../form/GInput";
 import { Button } from "antd";
