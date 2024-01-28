@@ -115,6 +115,7 @@ const GiftInventoryContainer = () => {
     const res = await deleteMultipleGift(ids).unwrap();
     if (res.success) {
       toast.success("Gifts deleted successfully");
+      setSelectedCards([]);
     } else {
       toast.error("Something went wrong");
     }
