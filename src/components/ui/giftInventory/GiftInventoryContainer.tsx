@@ -6,8 +6,9 @@ import SaleModal from "./SeleModal";
 import { useState } from "react";
 import { Option } from "antd/es/mentions";
 import FilterOptions from "./FilterOptions";
+import UpdateGiftModal from "./UpdateGiftModal";
 
-type TGift = {
+export type TGift = {
   _id: string;
   name: string;
   price: number;
@@ -68,13 +69,14 @@ const GiftInventoryContainer = () => {
       {/* filter options component */}
 
       <div
-        style={{
-          display: "flex",
-          justifyContent: "between",
-          gap: "20px",
-          marginTop: "15px",
-          marginBottom: "15px",
-        }}
+        // style={{
+        //   display: "flex",
+        //   justifyContent: "between",
+        //   gap: "20px",
+        //   marginTop: "15px",
+        //   marginBottom: "15px",
+        // }}
+        className="md:flex  gap-5"
       >
         <div>
           <Input
@@ -126,7 +128,14 @@ const GiftInventoryContainer = () => {
               <div style={{ display: "flex", justifyContent: "end" }}>
                 {/* <Button>Sell</Button> */}
               </div>
-              <div style={{ display: "flex", justifyContent: "end" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginTop: "10px",
+                }}
+              >
+                <UpdateGiftModal gift={gift} />
                 <SaleModal giftId={gift._id} />
               </div>
             </Card>

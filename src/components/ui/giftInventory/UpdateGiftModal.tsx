@@ -1,0 +1,130 @@
+import { useState } from "react";
+import { Button, Modal } from "antd";
+import GForm from "../../form/GForm";
+import { FieldValues } from "react-hook-form";
+import GInput from "../../form/GInput";
+import GSelect from "../../form/GSelect";
+import { TGift } from "./GiftInventoryContainer";
+
+const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
+  // console.log(giftId);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // default values
+  const defaultValues = {
+    name: gift.name,
+    price: gift.price,
+    quantity: gift.quantity,
+    occasion: gift.occasion,
+    recipient: gift.recipient,
+    category: gift.category,
+    theme: gift.theme,
+    brand: gift.brand,
+    color: gift.color,
+  };
+
+  // console.log("add sale", data, isLoading, isError);
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+  // handle sell
+  const handleUpdateGift = async (data: FieldValues) => {
+    console.log(data);
+  };
+
+  return (
+    <div>
+      {" "}
+      <Button onClick={showModal}>Update</Button>
+      <Modal
+        title=""
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={""}
+        width={"800px"}
+      >
+        <GForm onSubmit={handleUpdateGift} defaultValues={defaultValues}>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div>
+              <div className="md:flex gap-4">
+                <GInput type={"text"} name={"name"} label={"Name"} />
+                <GInput type={"number"} name={"price"} label={"Price"} />
+              </div>
+              <div className="md:flex gap-4">
+                <GInput type={"number"} name={"quantity"} label={"Quantity"} />
+                <GSelect
+                  name="occasion"
+                  label="Occasion"
+                  options={[
+                    { value: "Birthday", label: "Birthday" },
+                    { value: "Anniversary", label: "Anniversary" },
+                    { value: "Holiday", label: "Holiday" },
+                  ]}
+                />
+              </div>
+              <div className="md:flex gap-4">
+                <GInput type={"text"} name={"recipient"} label={"Recipient"} />
+                <GSelect
+                  name="category"
+                  label="Category"
+                  options={[
+                    { value: "Home decor", label: "Home decor" },
+                    { value: "Gadget", label: "Gadget" },
+                    { value: "Accessories", label: "Accessories" },
+                  ]}
+                />
+              </div>
+              <div className="md:flex gap-4">
+                <GSelect
+                  name="theme"
+                  label="Theme"
+                  options={[
+                    { value: "Vintage", label: "Vintage" },
+                    { value: "Romantic", label: "Romantic" },
+                    { value: "Modern", label: "Modern" },
+                  ]}
+                />
+                <GSelect
+                  name="brand"
+                  label="Brand"
+                  options={[
+                    { value: "GiftCraft", label: "GiftCraft" },
+                    { value: "JoyFusion", label: "JoyFusion" },
+                    { value: "ElegantGiftery", label: "ElegantGiftery" },
+                  ]}
+                />
+              </div>
+              <div style={{ width: "100%" }}>
+                <GInput type={"text"} name={"color"} label={"Color"} />
+              </div>
+              <div style={{ display: "flex", justifyContent: "end" }}>
+                <Button
+                  style={{
+                    backgroundColor: "#1677FF",
+                    color: "white",
+                  }}
+                  htmlType="submit"
+                >
+                  Submit
+                </Button>
+              </div>
+            </div>
+          </div>
+        </GForm>
+      </Modal>
+    </div>
+  );
+};
+
+export default UpdateGiftModal;

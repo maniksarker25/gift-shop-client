@@ -48,6 +48,7 @@ const SaleModal = ({ giftId }: { giftId: string }) => {
   if (isLoading) {
     return <Loader />;
   }
+
   return (
     <div>
       {" "}
