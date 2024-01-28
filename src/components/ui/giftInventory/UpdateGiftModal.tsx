@@ -5,11 +5,14 @@ import { FieldValues } from "react-hook-form";
 import GInput from "../../form/GInput";
 import GSelect from "../../form/GSelect";
 import { TGift } from "./GiftInventoryContainer";
+import { useUpdateGiftMutation } from "../../../redux/features/gift/giftApi";
+import Loader from "../loader/Loader";
+import toast from "react-hot-toast";
 
 const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
   // console.log(giftId);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+  const [updateGift, { isLoading }] = useUpdateGiftMutation();
   // default values
   const defaultValues = {
     name: gift.name,
@@ -39,8 +42,33 @@ const UpdateGiftModal = ({ gift }: { gift: TGift }) => {
 
   // handle sell
   const handleUpdateGift = async (data: FieldValues) => {
-    console.log(data);
+    const updatedGiftInfo = {
+      name: data.name,
+      price: parseInt(data.price),
+      quantity: parseInt(data.quantity),
+      occasion: data.occasion,
+      recipient: data.recipient,
+      category: data.category,
+      theme: data.theme,
+      brand: data.brand,
+      color: data.color,
+    };
+    const options = {
+      id: gift?._id,
+      data: updatedGiftInfo,
+    };
+    const res = await updateGift(options).unwrap();
+    // console.log(res);
+    if (res.success) {
+      toast.success("Gift updated successfully");
+      handleCancel();
+    } else {
+      toast.error("Something went wrong");
+    }
   };
+  if (isLoading) {
+    return <Loader />;
+  }
 
   return (
     <div>

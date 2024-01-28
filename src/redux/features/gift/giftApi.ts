@@ -21,7 +21,19 @@ const giftApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["gift"],
     }),
+    updateGift: builder.mutation({
+      query: (options) => {
+        console.log(options);
+        return {
+          url: `/gifts/${options.id}`,
+          method: "PUT",
+          body: options?.data,
+        };
+      },
+      invalidatesTags: ["gift"],
+    }),
   }),
 });
 
-export const { useGetGiftsQuery, useAddGiftMutation } = giftApi;
+export const { useGetGiftsQuery, useAddGiftMutation, useUpdateGiftMutation } =
+  giftApi;
