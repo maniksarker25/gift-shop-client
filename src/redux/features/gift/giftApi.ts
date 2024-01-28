@@ -3,10 +3,14 @@ import { baseApi } from "../../api/baseApi";
 const giftApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getGifts: builder.query({
-      query: () => ({
-        url: "/gifts",
-        method: "GET",
-      }),
+      query: (filters) => {
+        console.log(filters);
+        return {
+          url: "/gifts",
+          method: "GET",
+          params: filters,
+        };
+      },
       providesTags: ["gift"],
     }),
     addGift: builder.mutation({

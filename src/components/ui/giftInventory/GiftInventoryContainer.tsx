@@ -1,7 +1,11 @@
-import { Card } from "antd";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { Button, Card, Input, Select } from "antd";
 import { useGetGiftsQuery } from "../../../redux/features/gift/giftApi";
 import Loader from "../loader/Loader";
 import SaleModal from "./SeleModal";
+import { useState } from "react";
+import { Option } from "antd/es/mentions";
+import FilterOptions from "./FilterOptions";
 
 type TGift = {
   _id: string;
@@ -16,17 +20,83 @@ type TGift = {
   color: string;
 };
 const GiftInventoryContainer = () => {
-  const { data, isLoading } = useGetGiftsQuery(undefined);
-  // console.log(isLoading);
-  // console.log(data);
+  const [searchValue, setSearchValue] = useState("");
+  // state for filer values
+  const [filters, setFilters] = useState({
+    category: "",
+    theme: "",
+    occasion: "",
+    brand: "",
+    name: "",
+  });
+
+  // handle filter changes --------------
+  const handleFilterChange = (filterType: string, value: string) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      [filterType]: value,
+    }));
+  };
+  const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchButtonClick = () => {
+    // Set the search input value to a specific filter, adjust as needed
+    handleFilterChange("name", searchValue);
+  };
+
+  // format filters for query -----------------
+  const formatFiltersForQuery = () => {
+    const queryString = Object.entries(filters)
+      .filter(([key, value]) => value !== "")
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join("&");
+
+    return queryString ? `${queryString}` : "";
+  };
+  console.log(formatFiltersForQuery());
+  const { data, isLoading, isError, isSuccess } = useGetGiftsQuery(
+    formatFiltersForQuery()
+  );
+  // console.log(data, isLoading, isError, isSuccess);
   if (isLoading) {
     return <Loader />;
   }
-
-  // for modal
-
   return (
     <div>
+      {/* filter options component */}
+
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "between",
+          gap: "20px",
+          marginTop: "15px",
+          marginBottom: "15px",
+        }}
+      >
+        <div>
+          <Input
+            style={{ width: 200, marginRight: 8 }}
+            placeholder="Search By Name"
+            value={filters.name || undefined}
+            onChange={handleSearchInputChange}
+          />
+          <Button
+            style={{ backgroundColor: "#1677FF", color: "white" }}
+            onClick={handleSearchButtonClick}
+          >
+            Search
+          </Button>
+        </div>
+        <div>
+          <FilterOptions
+            filters={filters}
+            handleFilterChange={handleFilterChange}
+          />
+        </div>
+      </div>
       <div>
         {/* <Row gutter={[16, 16]} justify="space-between"> */}
         <div

@@ -4,16 +4,16 @@ import Loader from "../loader/Loader";
 import SaleHistoryTable from "./SaleHistoryTable";
 import { useState } from "react";
 import { Option } from "antd/es/mentions";
-
+type TSelectedValue = "daily" | "weekly" | "monthly" | "year";
 const SaleContainer = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const [selectedValue, setSelectedValue] = useState<TSelectedValue | "">("");
   const { data, isLoading } = useGetSalesQuery(selectedValue);
   if (isLoading) {
     return <Loader />;
   }
   // handle onChange
 
-  const handleSelectChange = (value: string) => {
+  const handleSelectChange = (value: TSelectedValue | "") => {
     setSelectedValue(value);
     // console.log(value);
   };
@@ -31,7 +31,8 @@ const SaleContainer = () => {
           style={{ width: 200 }}
           placeholder="Filter History"
           onChange={handleSelectChange}
-          value={selectedValue}
+          value={selectedValue === "" ? undefined : selectedValue}
+          allowClear={true}
         >
           <Option value="daily">Daily</Option>
           <Option value="weekly">Weekly</Option>
