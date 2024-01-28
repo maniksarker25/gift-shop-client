@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Button, Card, Input, Select } from "antd";
-import { useGetGiftsQuery } from "../../../redux/features/gift/giftApi";
+import {
+  useDeleteSingleGiftMutation,
+  useGetGiftsQuery,
+} from "../../../redux/features/gift/giftApi";
 import Loader from "../loader/Loader";
 import SaleModal from "./SeleModal";
 import { useState } from "react";
-import { Option } from "antd/es/mentions";
 import FilterOptions from "./FilterOptions";
 import UpdateGiftModal from "./UpdateGiftModal";
+import toast from "react-hot-toast";
 
 export type TGift = {
   _id: string;
@@ -56,18 +59,30 @@ const GiftInventoryContainer = () => {
 
     return queryString ? `${queryString}` : "";
   };
-  console.log(formatFiltersForQuery());
+
   const { data, isLoading, isError, isSuccess } = useGetGiftsQuery(
     formatFiltersForQuery()
   );
-  // console.log(data, isLoading, isError, isSuccess);
+
+  const [
+    deleteSingleGift,
+    { data: singleDeleteData, isLoading: singleDeleteLoading },
+  ] = useDeleteSingleGiftMutation();
+  console.log(singleDeleteData, singleDeleteLoading);
+  const handleSingleGiftDelete = async (id: string) => {
+    const res = await deleteSingleGift(id).unwrap();
+    if (res.success) {
+      toast.success("Gift deleted successfully");
+    } else {
+      toast.error("Something went wrong");
+    }
+  };
+
   if (isLoading) {
     return <Loader />;
   }
   return (
     <div>
-      {/* filter options component */}
-
       <div
         // style={{
         //   display: "flex",
@@ -108,15 +123,44 @@ const GiftInventoryContainer = () => {
 
             justifyContent: "center",
             gap: "16px",
+            marginTop: "20px",
           }}
         >
           {data?.data?.map((gift: TGift, index: number) => (
             <Card
               key={index}
-              title={gift?.name}
+              // title={gift?.name}
               bordered={false}
               style={{ width: 300 }}
             >
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  marginBottom: "20px",
+                }}
+              >
+                <p>a</p>
+                <p
+                  onClick={() => handleSingleGiftDelete(gift?._id)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    className="w-6 h-6"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      d="M6 18 18 6M6 6l12 12"
+                    />
+                  </svg>
+                </p>
+              </div>
               <p>Price : {gift?.price}</p>
               <p>Quantity : {gift?.quantity}</p>
               <p>Occasion : {gift?.occasion}</p>

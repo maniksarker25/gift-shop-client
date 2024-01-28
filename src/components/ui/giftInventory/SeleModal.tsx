@@ -9,11 +9,8 @@ import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
 
 const SaleModal = ({ giftId }: { giftId: string }) => {
-  // console.log(giftId);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [addSale, { isLoading }] = useAddSaleMutation();
-
-  // console.log("add sale", data, isLoading, isError);
 
   const showModal = () => {
     setIsModalOpen(true);
