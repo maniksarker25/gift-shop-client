@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useRegisterMutation } from "../redux/features/auth/authApi";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import { ApiError } from "../types/responseType";
 
 const Register = () => {
   const [register, { data, error }] = useRegisterMutation();
@@ -28,7 +29,8 @@ const Register = () => {
         navigate("/login");
       }
     } catch (error) {
-      setErrorMessage(error?.data.errorMessage);
+      const apiError = error as ApiError;
+      setErrorMessage(apiError?.data.errorMessage);
     }
   };
   return (

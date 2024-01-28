@@ -6,11 +6,10 @@ import GSelect from "../../form/GSelect";
 import { useAddGiftMutation } from "../../../redux/features/gift/giftApi";
 import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
+import { ApiError } from "../../../types/responseType";
 
 const AddGiftContainer = () => {
   const [addGift, { isLoading }] = useAddGiftMutation();
-
-  // console.log(data, isLoading, isError, isSuccess);
 
   const handleAddGiftSubmit = async (data: FieldValues) => {
     // console.log(data);
@@ -30,8 +29,10 @@ const AddGiftContainer = () => {
       if (res?.success) {
         toast.success("Gift added successfully");
       }
-    } catch (error) {
-      toast.error(error?.data.errorMessage);
+    } catch (err) {
+      const apiError = err as ApiError;
+      console.log(apiError);
+      toast.error(apiError?.data?.errorMessage);
     }
   };
   if (isLoading) {

@@ -1,4 +1,3 @@
-import React from "react";
 import SaleContainer from "../components/ui/sale/SaleContainer";
 
 const SaleHistory = () => {

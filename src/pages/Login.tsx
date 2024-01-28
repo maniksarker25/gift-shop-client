@@ -9,6 +9,7 @@ import { useAppDispatch } from "../redux/hooks";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { ApiError } from "../types/responseType";
 
 const Login = () => {
   const [login, { data, error }] = useLoginMutation();
@@ -33,7 +34,8 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      setErrorMessage(error?.data.errorMessage);
+      const apiError = error as ApiError;
+      setErrorMessage(apiError?.data.errorMessage);
     }
   };
   return (

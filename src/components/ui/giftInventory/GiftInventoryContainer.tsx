@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Button, Card, Input, Select } from "antd";
+import { Button, Card, Input } from "antd";
 import {
   useDeleteMultipleGiftMutation,
   useDeleteSingleGiftMutation,
@@ -26,8 +26,9 @@ export type TGift = {
 };
 const GiftInventoryContainer = () => {
   const [searchValue, setSearchValue] = useState("");
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
-  console.log(selectedCards);
   // state for filer values
   const [filters, setFilters] = useState({
     category: "",
@@ -35,6 +36,8 @@ const GiftInventoryContainer = () => {
     occasion: "",
     brand: "",
     name: "",
+    minPrice: "",
+    maxPrice: "",
   });
 
   // handle filter changes --------------
@@ -44,28 +47,42 @@ const GiftInventoryContainer = () => {
       [filterType]: value,
     }));
   };
+  // handle search input changes -----------------------
   const handleSearchInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };
-
+  // handle search button click
   const handleSearchButtonClick = () => {
-    // Set the search input value to a specific filter, adjust as needed
     handleFilterChange("name", searchValue);
+  };
+  //*--------------------
+  // handle min input changes -----------------------
+  const handleMinInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMinPrice(e.target.value);
+  };
+  //*------------------
+  // handle min input changes -----------------------
+  const handleMaxInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMaxPrice(e.target.value);
+  };
+  // handle search button click
+  const handleFilterButtonClick = () => {
+    handleFilterChange("minPrice", minPrice);
+    handleFilterChange("maxPrice", maxPrice);
   };
 
   // format filters for query -----------------
   const formatFiltersForQuery = () => {
     const queryString = Object.entries(filters)
-      .filter(([key, value]) => value !== "")
+      .filter(([, value]) => value !== "")
       .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
       .join("&");
 
     return queryString ? `${queryString}` : "";
   };
+  // console.log(formatFiltersForQuery());
 
-  const { data, isLoading, isError, isSuccess } = useGetGiftsQuery(
-    formatFiltersForQuery()
-  );
+  const { data, isLoading } = useGetGiftsQuery(formatFiltersForQuery());
 
   const [deleteSingleGift] = useDeleteSingleGiftMutation();
   // console.log(singleDeleteData, singleDeleteLoading);
@@ -123,7 +140,7 @@ const GiftInventoryContainer = () => {
           <Input
             style={{ width: 200, marginRight: 8 }}
             placeholder="Search By Name"
-            value={filters.name || undefined}
+            defaultValue={filters.name || undefined}
             onChange={handleSearchInputChange}
           />
           <Button
@@ -132,6 +149,21 @@ const GiftInventoryContainer = () => {
           >
             Search
           </Button>
+        </div>
+        <div>
+          <Input
+            style={{ width: 200, marginRight: 8 }}
+            placeholder="Min Price"
+            defaultValue={filters.minPrice || undefined}
+            onChange={handleMinInputChange}
+          />
+          <Input
+            style={{ width: 200, marginRight: 8 }}
+            placeholder="Max Price"
+            defaultValue={filters.maxPrice || undefined}
+            onChange={handleMaxInputChange}
+          />
+          <Button onClick={handleFilterButtonClick}>Filter</Button>
         </div>
         <div>
           <FilterOptions
@@ -208,6 +240,15 @@ const GiftInventoryContainer = () => {
                   </svg>
                 </p>
               </div>
+              <h2
+                style={{
+                  fontSize: "20px",
+                  fontWeight: "semibold",
+                  marginBottom: "8px",
+                }}
+              >
+                {gift?.name}
+              </h2>
               <p>Price : {gift?.price}</p>
               <p>Quantity : {gift?.quantity}</p>
               <p>Occasion : {gift?.occasion}</p>

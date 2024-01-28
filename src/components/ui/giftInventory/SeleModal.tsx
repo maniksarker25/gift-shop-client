@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Modal } from "antd";
 import GForm from "../../form/GForm";
 import GInput from "../../form/GInput";
@@ -7,6 +7,7 @@ import GDatePicker from "../../form/GDatePicker";
 import { useAddSaleMutation } from "../../../redux/features/sale/saleApi";
 import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
+import { ApiError } from "../../../types/responseType";
 
 const SaleModal = ({ giftId }: { giftId: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -38,8 +39,10 @@ const SaleModal = ({ giftId }: { giftId: string }) => {
         toast.success("Gift sale successfully");
         setIsModalOpen(false);
       }
-    } catch (error) {
-      toast.error(error.data.errorMessage);
+    } catch (err) {
+      const apiError = err as ApiError;
+      console.log(apiError);
+      toast.error(apiError?.data?.errorMessage);
     }
   };
   if (isLoading) {
