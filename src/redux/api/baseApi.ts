@@ -2,7 +2,7 @@ import { fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { RootState } from "../store";
 
 import { createApi } from "@reduxjs/toolkit/query/react";
-
+// some changes =----------
 const baseQuery = fetchBaseQuery({
   baseUrl: "https://gift-shop-management-backend.vercel.app/api",
 
