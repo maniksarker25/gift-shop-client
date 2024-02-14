@@ -11,6 +11,10 @@ import { useState } from "react";
 import FilterOptions from "./FilterOptions";
 import UpdateGiftModal from "./UpdateGiftModal";
 import toast from "react-hot-toast";
+import { useAppSelector } from "../../../redux/hooks";
+import { TUser, useCurrentToken } from "../../../redux/features/auth/authSlice";
+import { verifyToken } from "../../../utils/verifyToken";
+import { JwtPayload } from "jwt-decode";
 
 export type TGift = {
   _id: string;
@@ -29,6 +33,11 @@ const GiftInventoryContainer = () => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [selectedCards, setSelectedCards] = useState<string[]>([]);
+  const token = useAppSelector(useCurrentToken);
+  let user: JwtPayload;
+  if (token) {
+    user = verifyToken(token);
+  }
   // state for filer values
   const [filters, setFilters] = useState({
     category: "",
@@ -224,35 +233,42 @@ const GiftInventoryContainer = () => {
                   marginBottom: "20px",
                 }}
               >
-                <p>
-                  {" "}
-                  <input
-                    type="checkbox"
-                    style={{ cursor: "pointer" }}
-                    checked={selectedCards.includes(gift._id)}
-                    onChange={() => handleCardSelect(gift._id)}
-                  />
-                  <span style={{ marginLeft: "2px" }}> Select for delete</span>
-                </p>
-                <p
-                  onClick={() => handleSingleGiftDelete(gift?._id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    className="w-4 h-4"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6 18 18 6M6 6l12 12"
+                {(user as TUser)?.role === "manager" && (
+                  <p>
+                    {" "}
+                    <input
+                      type="checkbox"
+                      style={{ cursor: "pointer" }}
+                      checked={selectedCards.includes(gift._id)}
+                      onChange={() => handleCardSelect(gift._id)}
                     />
-                  </svg>
-                </p>
+                    <span style={{ marginLeft: "2px" }}>
+                      {" "}
+                      Select for delete
+                    </span>
+                  </p>
+                )}
+                {(user as TUser)?.role === "manager" && (
+                  <p
+                    onClick={() => handleSingleGiftDelete(gift?._id)}
+                    style={{ cursor: "pointer" }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      className="w-4 h-4"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M6 18 18 6M6 6l12 12"
+                      />
+                    </svg>
+                  </p>
+                )}
               </div>
               <h2
                 style={{
@@ -281,8 +297,12 @@ const GiftInventoryContainer = () => {
                   marginTop: "10px",
                 }}
               >
-                <UpdateGiftModal gift={gift} />
-                <SaleModal giftId={gift._id} />
+                {(user as TUser)?.role === "manager" && (
+                  <UpdateGiftModal gift={gift} />
+                )}
+                {(user as TUser)?.role === "seller" && (
+                  <SaleModal giftId={gift._id} />
+                )}
               </div>
             </Card>
           ))}
