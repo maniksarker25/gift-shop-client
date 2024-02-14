@@ -1,11 +1,26 @@
 import { Button, Layout, Menu, MenuProps } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
-import { useAppDispatch } from "../../redux/hooks";
-import { logout } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import {
+  TUser,
+  logout,
+  useCurrentToken,
+} from "../../redux/features/auth/authSlice";
+import { verifyToken } from "../../utils/verifyToken";
 
 const { Header, Content, Sider } = Layout;
 
-const items: MenuProps["items"] = [
+const sellerItems: MenuProps["items"] = [
+  {
+    key: "1",
+    label: <NavLink to={"/"}>Gift Inventory</NavLink>,
+  },
+  {
+    key: "3",
+    label: <NavLink to={"sale-history"}>Sale History</NavLink>,
+  },
+];
+const managerItems: MenuProps["items"] = [
   {
     key: "1",
     label: <NavLink to={"/"}>Gift Inventory</NavLink>,
@@ -21,6 +36,11 @@ const items: MenuProps["items"] = [
 ];
 const MainLayout = () => {
   const dispatch = useAppDispatch();
+  const token = useAppSelector(useCurrentToken);
+  let user;
+  if (token) {
+    user = verifyToken(token);
+  }
   return (
     <Layout style={{ height: "100%", minHeight: "100vh" }}>
       <Sider
@@ -73,7 +93,9 @@ const MainLayout = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["4"]}
-          items={items}
+          items={
+            (user as TUser)?.role === "seller" ? sellerItems : managerItems
+          }
         />
       </Sider>
       <Layout>

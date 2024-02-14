@@ -5,6 +5,7 @@ import AddGift from "../pages/AddGift";
 import SaleHistory from "../pages/SaleHistory";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
+import ProtectedRoute from "../components/layout/ProtectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -13,11 +14,19 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <GiftInventory />,
+        element: (
+          <ProtectedRoute requiredRoles={["manager", "seller"]}>
+            <GiftInventory />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "add-gift",
-        element: <AddGift />,
+        element: (
+          <ProtectedRoute requiredRoles={["seller"]}>
+            <AddGift />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "sale-history",
