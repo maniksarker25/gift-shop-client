@@ -33,6 +33,10 @@ const managerItems: MenuProps["items"] = [
     key: "3",
     label: <NavLink to={"sale-history"}>Sale History</NavLink>,
   },
+  {
+    key: "4",
+    label: <NavLink to={"coupon"}>Coupon</NavLink>,
+  },
 ];
 const MainLayout = () => {
   const dispatch = useAppDispatch();

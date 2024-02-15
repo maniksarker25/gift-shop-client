@@ -6,6 +6,7 @@ import SaleHistory from "../pages/SaleHistory";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import ProtectedRoute from "../components/layout/ProtectedRoute";
+import Coupon from "../pages/Coupon";
 
 const router = createBrowserRouter([
   {
@@ -23,7 +24,7 @@ const router = createBrowserRouter([
       {
         path: "add-gift",
         element: (
-          <ProtectedRoute requiredRoles={["seller"]}>
+          <ProtectedRoute requiredRoles={["manager"]}>
             <AddGift />
           </ProtectedRoute>
         ),
@@ -31,6 +32,14 @@ const router = createBrowserRouter([
       {
         path: "sale-history",
         element: <SaleHistory />,
+      },
+      {
+        path: "coupon",
+        element: (
+          <ProtectedRoute requiredRoles={["manager"]}>
+            <Coupon />
+          </ProtectedRoute>
+        ),
       },
     ],
   },

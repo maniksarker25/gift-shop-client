@@ -8,6 +8,9 @@ import { useAddSaleMutation } from "../../../redux/features/sale/saleApi";
 import toast from "react-hot-toast";
 import Loader from "../loader/Loader";
 import { ApiError } from "../../../types/responseType";
+// import Swal from "sweetalert2";
+// import { saveAs } from "file-saver";
+// import generatePDFData from "../../../utils/generatePdf";
 
 const SaleModal = ({ giftId }: { giftId: string }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,6 +48,41 @@ const SaleModal = ({ giftId }: { giftId: string }) => {
       toast.error(apiError?.data?.errorMessage);
     }
   };
+  // const handleSellSubmit = async (data: FieldValues) => {
+  //   try {
+  //     const saleInfo = {
+  //       giftId: giftId,
+  //       quantity: parseInt(data.quantity),
+  //       buyerName: data.buyerName,
+  //       date: data.date,
+  //     };
+  //     const res = await addSale(saleInfo).unwrap();
+  //     if (res.success) {
+  //       Swal.fire({
+  //         title: "Download PDF?",
+  //         text: "Do you want to download the PDF for selling information?",
+  //         icon: "question",
+  //         showCancelButton: true,
+  //         confirmButtonText: "Yes",
+  //         cancelButtonText: "No",
+  //       }).then((result) => {
+  //         if (result.isConfirmed) {
+  //           // Logic for downloading PDF
+  //           // You need to implement this part according to your PDF generation logic
+  //           const pdfData = generatePDFData(saleInfo); // You need to implement generatePDFData function
+  //           const pdfBlob = new Blob([pdfData], { type: "application/pdf" });
+  //           saveAs(pdfBlob, "sale_information.pdf");
+  //         }
+  //       });
+  //       toast.success("Gift sale successfully");
+  //       setIsModalOpen(false);
+  //     }
+  //   } catch (err) {
+  //     const apiError = err as ApiError;
+  //     console.log(apiError);
+  //     toast.error(apiError?.data?.errorMessage);
+  //   }
+  // };
   if (isLoading) {
     return <Loader />;
   }
