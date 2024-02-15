@@ -1,5 +1,11 @@
+import CouponContainer from "../components/ui/coupon/CouponContainer";
+
 const Coupon = () => {
-  return <div>here are all coupons</div>;
+  return (
+    <div>
+      <CouponContainer />
+    </div>
+  );
 };
 
 export default Coupon;
