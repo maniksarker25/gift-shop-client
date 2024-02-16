@@ -34,9 +34,9 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
 
     // Add content to the PDF
     doc.text("Selling Invoice", 55, 10);
-    doc.text(`Gift Name: ${item.giftId.name}`, 10, 20);
-    doc.text(`Quantity: ${item.quantity}`, 10, 30);
-    doc.text(`Price: ${item.giftId.price} BDT`, 10, 40);
+    doc.text(`Gift Name: ${item?.giftId?.name}`, 10, 20);
+    doc.text(`Quantity: ${item?.quantity}`, 10, 30);
+    doc.text(`Price: ${item?.giftId?.price} BDT`, 10, 40);
     doc.text(
       `Discount: ${
         item?.discountPercentage
