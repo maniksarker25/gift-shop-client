@@ -22,14 +22,11 @@ type TSale = {
 };
 
 const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
-  // const downloadPdf = (item) => {
-  //   console.log(item);
-  // };
   const downloadPdf = (item: TSale) => {
     const doc = new jsPDF({
-      orientation: "portrait", // or "landscape"
-      unit: "mm", // units: mm, cm, in, px
-      format: [150, 210], // width and height in mm
+      orientation: "portrait",
+      unit: "mm",
+      format: [150, 210],
     });
 
     // Add content to the PDF
