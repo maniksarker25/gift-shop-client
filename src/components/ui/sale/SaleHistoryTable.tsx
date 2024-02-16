@@ -52,8 +52,7 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
       70
     );
     doc.text(`Total Price: ${item.totalPrice} BDT`, 10, 80);
-    doc.text(`Buyer Name: ${item.buyerName}`, 10, 90);
-    doc.text(`Sale Date: ${moment(item.date).format("DD/MM/YYYY")}`, 10, 100);
+    doc.text(`Sale Date: ${moment(item.date).format("DD/MM/YYYY")}`, 10, 90);
 
     // Save PDF
     doc.save("invoice.pdf");
