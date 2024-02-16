@@ -2,7 +2,7 @@
 - Make a Gift management application with React,Redux,Typescript
 
 - ## Host Link
-- Hosted in Vercel => https://gift-shop-management-client-theta.vercel.app/
+- Hosted in Vercel => https://gift-shop-client-iota.vercel.app/
 
 - ### Instructions for run this file locally
 - npm install --force (run this command in terminal for this file for install all packages)
