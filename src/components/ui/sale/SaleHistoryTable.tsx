@@ -14,6 +14,12 @@ type TSale = {
     brand: string;
     color: string;
   };
+  seller: {
+    fullName: string;
+    email: string;
+    role: "seller" | "manager";
+    password: string;
+  };
   quantity: number;
   totalPrice: number;
   buyerName: string;
@@ -32,8 +38,10 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
     // Add content to the PDF
     doc.text("Selling Invoice", 55, 10);
     doc.text(`Gift Name: ${item?.giftId?.name}`, 10, 20);
-    doc.text(`Quantity: ${item?.quantity}`, 10, 30);
-    doc.text(`Price: ${item?.giftId?.price} BDT`, 10, 40);
+    doc.text(`Seller Name: ${item?.seller?.fullName}`, 10, 30);
+    doc.text(`Buyer Name: ${item?.buyerName}`, 10, 40);
+    doc.text(`Quantity: ${item?.quantity}`, 10, 50);
+    doc.text(`Price: ${item?.giftId?.price} BDT`, 10, 60);
     doc.text(
       `Discount: ${
         item?.discountPercentage
@@ -41,11 +49,11 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
           : "Not Available"
       }`,
       10,
-      50
+      70
     );
-    doc.text(`Total Price: ${item.totalPrice} BDT`, 10, 60);
-    doc.text(`Buyer Name: ${item.buyerName}`, 10, 70);
-    doc.text(`Sale Date: ${moment(item.date).format("DD/MM/YYYY")}`, 10, 80);
+    doc.text(`Total Price: ${item.totalPrice} BDT`, 10, 80);
+    doc.text(`Buyer Name: ${item.buyerName}`, 10, 90);
+    doc.text(`Sale Date: ${moment(item.date).format("DD/MM/YYYY")}`, 10, 100);
 
     // Save PDF
     doc.save("invoice.pdf");
@@ -58,6 +66,8 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
         <thead>
           <tr>
             <th className="py-2 px-1 border-b">Gift Name</th>
+            <th className="py-2 px-1 border-b">Seller Name</th>
+            <th className="py-2 px-1 border-b">Buyer Name</th>
             <th className="py-2 px-1 border-b">Quantity</th>
             <th className="py-2 px-1 border-b">Price</th>
             <th className="py-2 px-1 border-b">Discount</th>
@@ -70,6 +80,8 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
           {data?.map((item, index: number) => (
             <tr key={index}>
               <td className="py-2 px-4 border-b">{item?.giftId?.name}</td>
+              <td className="py-2 px-4 border-b">{item?.seller?.fullName}</td>
+              <td className="py-2 px-4 border-b">{item?.buyerName}</td>
               <td className="py-2 px-4 border-b">{item?.quantity}</td>
               <td className="py-2 px-4 border-b">{item?.giftId?.price}</td>
               {/* <td className="py-2 px-4 border-b">{item?.giftId?.price}</td> */}
