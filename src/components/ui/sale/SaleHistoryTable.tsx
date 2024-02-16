@@ -80,6 +80,8 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
                   ? item?.discountPercentage + "%"
                   : "Not Available"}
               </td>
+              <td className="py-2 px-4 border-b">{item?.totalPrice}</td>
+
               <td className="py-2 px-4 border-b">
                 {moment(item?.date).format("DD/MM/YYYY")}
               </td>
