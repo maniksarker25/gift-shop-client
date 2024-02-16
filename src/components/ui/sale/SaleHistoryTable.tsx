@@ -36,7 +36,7 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
     doc.text("Selling Invoice", 55, 10);
     doc.text(`Gift Name: ${item.giftId.name}`, 10, 20);
     doc.text(`Quantity: ${item.quantity}`, 10, 30);
-    doc.text(`Price: ${item.giftId.price}`, 10, 40);
+    doc.text(`Price: ${item.giftId.price} BDT`, 10, 40);
     doc.text(
       `Discount: ${
         item?.discountPercentage
@@ -46,7 +46,7 @@ const SaleHistoryTable = ({ data }: { data: TSale[] }) => {
       10,
       50
     );
-    doc.text(`Total Price: ${item.totalPrice}`, 10, 60);
+    doc.text(`Total Price: ${item.totalPrice} BDT`, 10, 60);
     doc.text(`Buyer Name: ${item.buyerName}`, 10, 70);
     doc.text(`Sale Date: ${moment(item.date).format("DD/MM/YYYY")}`, 10, 80);
 
