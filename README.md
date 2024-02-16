@@ -16,9 +16,19 @@
 
 ## Features
 
+- There is two role (manager and seller)
 - implement secure login system
-- User can create gift product
-- User can see all gift product and filter search
-- User can sale products
-- User can delete and bulk delete product
-- User can see sale history and filter based on daily,weekly,monthly,yearly
+
+## Manager
+
+- Manager can create gift product
+- Manager can see all gift product and filter search
+- Manager can delete and bulk delete product
+- Manager can make duplicate product with some changes
+- Manager can see sale history and filter based on daily,weekly,monthly,yearly
+
+## Seller
+
+- Seller can sell product
+- Seller can see sell history and filter based on daily,weekly,monthly,yearly
+- Seller can download sell invoice as a pdf
