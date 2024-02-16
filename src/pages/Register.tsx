@@ -7,6 +7,7 @@ import { useRegisterMutation } from "../redux/features/auth/authApi";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import { ApiError } from "../types/responseType";
+import GSelect from "../components/form/GSelect";
 
 const Register = () => {
   const [register] = useRegisterMutation();
@@ -19,6 +20,7 @@ const Register = () => {
       const userInfo = {
         fullName: data.fullName,
         email: data.email,
+        role: data.role,
         password: data.password,
       };
       const res = await register(userInfo).unwrap();
@@ -36,6 +38,14 @@ const Register = () => {
       <GForm onSubmit={onSubmit}>
         <GInput type={"fullName"} name={"fullName"} label={"Full Name"} />
         <GInput type={"email"} name={"email"} label={"Email"} />
+        <GSelect
+          name="role"
+          label="Select Role"
+          options={[
+            { value: "seller", label: "Seller" },
+            { value: "manager", label: "Manager" },
+          ]}
+        />
         <GInput type={"password"} name={"password"} label={"Password"} />
         {errorMessage && (
           <p style={{ color: "red", marginBottom: "7px" }}>{errorMessage}</p>
