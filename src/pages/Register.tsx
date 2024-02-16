@@ -40,7 +40,7 @@ const Register = () => {
         <GInput type={"email"} name={"email"} label={"Email"} />
         <GSelect
           name="role"
-          label="Select Role"
+          label="Role"
           options={[
             { value: "seller", label: "Seller" },
             { value: "manager", label: "Manager" },
