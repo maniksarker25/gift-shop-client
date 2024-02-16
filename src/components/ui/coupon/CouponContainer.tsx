@@ -1,5 +1,7 @@
 import { Table, TableColumnsType } from "antd";
 import { useGetCouponsQuery } from "../../../redux/features/coupon/coupon.api";
+import AddCoupon from "./AddCoupon";
+import moment from "moment";
 
 export type TTableData = {
   event: string;
@@ -33,13 +35,13 @@ const CouponContainer = () => {
   const { data: couponData, isFetching } = useGetCouponsQuery(undefined);
   // console.log(semesterData);
   const tableData = couponData?.data?.map(
-    ({ _id, event, coupon, discountPercentage, expireDate }) => ({
+    ({ _id, event, coupon, discountPercentage, expireDate }: any) => ({
       key: _id,
       name,
       event,
       coupon,
       discountPercentage,
-      expireDate,
+      expireDate: moment(expireDate).format("DD/MM/YYYY"),
     })
   );
 
@@ -63,6 +65,11 @@ const CouponContainer = () => {
 
   return (
     <div>
+      <div
+        style={{ display: "flex", justifyContent: "end", marginBottom: "20px" }}
+      >
+        <AddCoupon />
+      </div>
       <Table
         loading={isFetching}
         columns={columns}
