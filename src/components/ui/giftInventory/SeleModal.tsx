@@ -35,6 +35,7 @@ const SaleModal = ({ giftId }: { giftId: string }) => {
         giftId: giftId,
         quantity: parseInt(data.quantity),
         buyerName: data.buyerName,
+        coupon: data.coupon,
         date: data.date,
       };
       const res = await addSale(saleInfo).unwrap();
@@ -109,6 +110,12 @@ const SaleModal = ({ giftId }: { giftId: string }) => {
               <GInput type={"number"} name={"quantity"} label={"Quantity"} />
               <GInput type={"text"} name={"buyerName"} label={"Buyer Name"} />
               <GDatePicker name="date" label="Select Date" />
+              <GInput
+                type={"text"}
+                name={"coupon"}
+                label={"Add Coupon For Discount"}
+                notRequired={true}
+              />
               <div style={{ display: "flex", justifyContent: "end" }}>
                 <Button htmlType="submit">Sale</Button>
               </div>
